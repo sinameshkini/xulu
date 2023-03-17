@@ -9,7 +9,7 @@ var Verbs = map[string]func([]int) int{
 }
 
 func IsVerb(word string) bool {
-	for verb, _ := range Verbs {
+	for verb := range Verbs {
 		if word == verb {
 			return true
 		}
