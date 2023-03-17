@@ -1,11 +1,13 @@
 package main
 
-func Check(input string) (code int, err error) {
+import "xulu/models"
+
+func grammerCheck(input string) (code int, err error) {
 	var (
-		sentence *Sentence
+		sentence *models.Sentence
 	)
 
-	if sentence, err = ParseSentence(input); err != nil {
+	if sentence, err = models.ParseSentence(input); err != nil {
 		return
 	}
 

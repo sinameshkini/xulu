@@ -2,29 +2,32 @@ package main
 
 import (
 	"fmt"
+	"os"
 )
-
-// var (
-// 	alphabets = map[string]int{
-// 		"a": 1,
-// 		"b": 2,
-// 		"c": 3,
-// 		"d": 4,
-// 		"e": 5,
-// 	}
-
-// 	Verbs = map[string]func([]int) int{
-// 		"abcd": operations.Addition,
-// 		"bcde": operations.Subtraction,
-// 		"dede": operations.Multiplication,
-// 	}
-// )
 
 func main() {
 	fmt.Println("starting xulu ...")
+
+	var (
+		sampleSentences = []string{
+			"abcd abcd aabbc ab a c ccd dede cccd cd",
+			"dede abcd abd abddd ddada dac abcd de ed",
+		}
+	)
+
+	for idx, s := range sampleSentences {
+		fmt.Printf("sample %d: %s \n", idx+1, s)
+
+		code, err := grammerCheck(s)
+		if err != nil {
+			fmt.Println("error:", err.Error())
+			os.Exit(1)
+		}
+
+		fmt.Printf("number equivalent to the code: %d \n", code)
+		fmt.Println("_____________________________________________________________________")
+	}
+
+	fmt.Println("xulu stopping")
+	os.Exit(0)
 }
-
-// func mod5Sum(verb string, names []string) (mod5 int) {
-
-// 	return
-// }
