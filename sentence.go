@@ -1,4 +1,4 @@
-package models
+package main
 
 import (
 	"errors"
@@ -8,6 +8,7 @@ import (
 var (
 	ErrNotBeginWithVerb = errors.New("the sentence does not begin with a verb")
 	ErrNoNamesAfterVerb = errors.New("no words were found after the verb")
+	ErrInvalidCharacter = errors.New("this character is not an alphabetic character")
 )
 
 type Sentence struct {
@@ -15,9 +16,26 @@ type Sentence struct {
 	Names        []string
 	SubSentences []*Sentence
 	following    string
+	// number       int
 }
 
-// func (s *Sentence)
+func (s *Sentence) CalculateNumber() (number int) {
+	var numbers []int
+	if len(s.Names) != 0 {
+		for _, name := range s.Names {
+			numbers = append(numbers, NameToNumber(name))
+		}
+
+	} else if len(s.SubSentences) != 0 {
+		for _, subSentence := range s.SubSentences {
+			numbers = append(numbers, subSentence.CalculateNumber())
+		}
+	}
+
+	number = Verbs[s.Verb](numbers)
+
+	return
+}
 
 func ParseSentence(str string) (sentence *Sentence, err error) {
 	var (
@@ -73,6 +91,12 @@ func ParseSentenceWithFollowing(str string) (sentence *Sentence, err error) {
 			// sentence.Names = words[1:]
 			sentence.following = strings.Join(words[idx+1:], " ")
 			return
+		}
+
+		for _, char := range word {
+			if !IsAlphabet(byte(char)) {
+				return nil, ErrInvalidCharacter
+			}
 		}
 
 		sentence.Names = append(sentence.Names, word)

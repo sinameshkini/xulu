@@ -1,4 +1,4 @@
-package grammar
+package main
 
 import "testing"
 
@@ -15,9 +15,24 @@ func TestCheck(t *testing.T) {
 		{
 			name: "success",
 			args: args{
-				sentence: "abcd abcd aabbc ab a c ccd dede cccd cd",
+				sentence: "abcd abcd aabbc ab a c ccd dede cccd cd",
 			},
 			wantCode: 861,
+			wantErr:  false,
+		},
+		{
+			name: "set 1",
+			args: args{
+				sentence: "abab ab de ee",
+			},
+			wantErr: true,
+		},
+		{
+			name: "set 2",
+			args: args{
+				sentence: "dede abcd abd abddd ddada dac abcd de ed",
+			},
+			wantCode: 2656,
 			wantErr:  false,
 		},
 	}

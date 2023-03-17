@@ -1,6 +1,6 @@
-package models
+package main
 
-import "xulu/utils/operations"
+import "xulu/operations"
 
 var Verbs = map[string]func([]int) int{
 	"abcd": operations.Addition,
